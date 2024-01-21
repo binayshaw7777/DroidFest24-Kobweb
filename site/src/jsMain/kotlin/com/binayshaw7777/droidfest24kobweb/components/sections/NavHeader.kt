@@ -34,6 +34,7 @@ import com.varabyte.kobweb.silk.theme.colors.ColorMode
 import org.jetbrains.compose.web.css.*
 import com.binayshaw7777.droidfest24kobweb.components.widgets.IconButton
 import com.binayshaw7777.droidfest24kobweb.toSitePalette
+import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 
 val NavHeaderStyle by ComponentStyle.base {
     Modifier.fillMaxWidth().padding(1.cssRem)
@@ -47,7 +48,9 @@ private fun NavLink(path: String, text: String) {
 @Composable
 private fun MenuItems() {
     NavLink("/", "Home")
-    NavLink("/about", "About")
+    NavLink("/", "Events")
+    NavLink("/", "Sponsors")
+    NavLink("/", "Contact")
 }
 
 @Composable
@@ -99,14 +102,7 @@ enum class SideMenuState {
 
 @Composable
 fun NavHeader() {
-    Row(NavHeaderStyle.toModifier(), verticalAlignment = Alignment.CenterVertically) {
-        Link("https://kobweb.varabyte.com") {
-            // Block display overrides inline display of the <img> tag, so it calculates centering better
-            Image("/kobweb-logo.png", "Kobweb Logo", Modifier.height(2.cssRem).display(DisplayStyle.Block))
-        }
-
-        Spacer()
-
+    Row(NavHeaderStyle.toModifier().zIndex(1f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center) {
         Row(Modifier.gap(1.5.cssRem).displayIfAtLeast(Breakpoint.MD), verticalAlignment = Alignment.CenterVertically) {
             MenuItems()
             ColorModeButton()

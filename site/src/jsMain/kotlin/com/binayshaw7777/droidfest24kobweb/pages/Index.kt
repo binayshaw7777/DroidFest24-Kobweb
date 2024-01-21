@@ -1,129 +1,109 @@
 package com.binayshaw7777.droidfest24kobweb.pages
 
 import androidx.compose.runtime.Composable
-import com.varabyte.kobweb.compose.css.StyleVariable
+import com.binayshaw7777.droidfest24kobweb.HeadingFontStyle
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
 import com.varabyte.kobweb.compose.foundation.layout.Row
 import com.varabyte.kobweb.compose.ui.Modifier
-import com.varabyte.kobweb.compose.ui.graphics.Color
 import com.varabyte.kobweb.compose.ui.graphics.Colors
 import com.varabyte.kobweb.compose.ui.modifiers.*
-import com.varabyte.kobweb.compose.ui.toAttrs
 import com.varabyte.kobweb.core.Page
 import com.varabyte.kobweb.core.rememberPageContext
-import com.varabyte.kobweb.silk.components.forms.Button
-import com.varabyte.kobweb.silk.components.layout.breakpoint.displayIfAtLeast
-import com.varabyte.kobweb.silk.components.navigation.Link
-import com.varabyte.kobweb.silk.components.style.ComponentStyle
-import com.varabyte.kobweb.silk.components.style.base
-import com.varabyte.kobweb.silk.components.style.breakpoint.Breakpoint
-import com.varabyte.kobweb.silk.components.style.toAttrs
 import com.varabyte.kobweb.silk.components.style.toModifier
 import com.varabyte.kobweb.silk.components.text.SpanText
-import com.varabyte.kobweb.silk.theme.colors.ColorMode
-import com.varabyte.kobweb.silk.theme.colors.ColorSchemes
 import org.jetbrains.compose.web.css.*
-import org.jetbrains.compose.web.dom.Div
-import org.jetbrains.compose.web.dom.Text
-import com.binayshaw7777.droidfest24kobweb.HeadlineTextStyle
-import com.binayshaw7777.droidfest24kobweb.SubheadlineTextStyle
+import com.binayshaw7777.droidfest24kobweb.HeroContainerStyle
+import com.binayshaw7777.droidfest24kobweb.HeroImageStyle
+import com.binayshaw7777.droidfest24kobweb.KotlinGradient
+import com.binayshaw7777.droidfest24kobweb.SecondaryFontStyle
+import com.binayshaw7777.droidfest24kobweb.components.Utils.DROID
+import com.binayshaw7777.droidfest24kobweb.components.Utils.FEST
+import com.binayshaw7777.droidfest24kobweb.components.Utils.KOLKATA_24
+import com.binayshaw7777.droidfest24kobweb.components.Utils.KOTLIN_3D
+import com.binayshaw7777.droidfest24kobweb.components.Utils.KotlinKolkataLinkedIn
+import com.binayshaw7777.droidfest24kobweb.components.Utils.LETS_GO
 import com.binayshaw7777.droidfest24kobweb.components.layouts.PageLayout
-import com.binayshaw7777.droidfest24kobweb.toSitePalette
+import com.varabyte.kobweb.compose.css.Cursor
+import com.varabyte.kobweb.compose.foundation.layout.Arrangement
+import com.varabyte.kobweb.compose.ui.Alignment
+import com.varabyte.kobweb.compose.ui.styleModifier
+import com.varabyte.kobweb.silk.components.graphics.Image
+import com.varabyte.kobweb.silk.components.layout.SimpleGrid
+import com.varabyte.kobweb.silk.components.layout.numColumns
+import org.jetbrains.compose.web.css.keywords.auto
 
-// Container that has a tagline and grid on desktop, and just the tagline on mobile
-val HeroContainerStyle by ComponentStyle {
-    base { Modifier.fillMaxWidth().gap(2.cssRem) }
-    Breakpoint.MD { Modifier.margin { top(20.vh) } }
-}
-
-// A demo grid that appears on the homepage because it looks good
-val HomeGridStyle by ComponentStyle.base {
-    Modifier
-        .gap(0.5.cssRem)
-        .width(70.cssRem)
-        .height(18.cssRem)
-}
-
-private val GridCellColorVar by StyleVariable<Color>()
-val HomeGridCellStyle by ComponentStyle.base {
-    Modifier
-        .backgroundColor(GridCellColorVar.value())
-        .boxShadow(blurRadius = 0.6.cssRem, color = GridCellColorVar.value())
-        .borderRadius(1.cssRem)
-}
-
-@Composable
-private fun GridCell(color: Color, row: Int, column: Int, width: Int? = null, height: Int? = null) {
-    Div(
-        HomeGridCellStyle.toModifier()
-            .setVariable(GridCellColorVar, color)
-            .gridItem(row, column, width, height)
-            .toAttrs()
-    )
-}
 
 @Page
 @Composable
 fun HomePage() {
     PageLayout("Home") {
-        Row(HeroContainerStyle.toModifier()) {
-            Box {
-                val sitePalette = ColorMode.current.toSitePalette()
+        Box(HeroContainerStyle.toModifier()) {
 
-                Column(Modifier.gap(2.cssRem)) {
-                    Div(HeadlineTextStyle.toAttrs()) {
+            SimpleGrid(
+                modifier = Modifier.fillMaxSize(),
+                numColumns = numColumns(base = 1, sm = 1, md = 2)
+            ) {
+
+                Column(
+                    verticalArrangement = Arrangement.Center
+                ) {
+
+                    Row {
+
                         SpanText(
-                            "Use this template as your starting point for ", Modifier.color(
-                                when (ColorMode.current) {
-                                    ColorMode.LIGHT -> Colors.Black
-                                    ColorMode.DARK -> Colors.White
+                            text = DROID,
+                            modifier = HeadingFontStyle.toModifier()
+                        )
+
+                        SpanText(
+                            text = FEST,
+                            modifier = HeadingFontStyle.toModifier()
+                                .then(KotlinGradient)
+                                .styleModifier {
+                                    property("-webkit-background-clip", "text")
+                                    property("-webkit-text-fill-color", "transparent")
                                 }
-                            )
-                        )
-                        SpanText(
-                            "Kobweb",
-                            Modifier
-                                .color(sitePalette.brand.accent)
-                                // Use a shadow so this light-colored word is more visible in light mode
-                                .textShadow(0.px, 0.px, blurRadius = 0.5.cssRem, color = Colors.Gray)
                         )
                     }
 
-                    Div(SubheadlineTextStyle.toAttrs()) {
-                        SpanText("You can read the ")
-                        Link("/about", "About")
-                        SpanText(" page for more information.")
-                    }
+                    SpanText(
+                        text = KOLKATA_24,
+                        modifier = SecondaryFontStyle.toModifier()
+                    )
 
                     val ctx = rememberPageContext()
-                    Button(onClick = {
-                        // Change this click handler with your call-to-action behavior
-                        // here. Link to an order page? Open a calendar UI? Play a movie?
-                        // Up to you!
-                        ctx.router.tryRoutingTo("/about")
-                    }, colorScheme = ColorSchemes.Blue) {
-                        Text("This could be your CTA")
+
+                    Box(
+                        modifier = Modifier
+                            .cursor(Cursor.Pointer)
+                            .borderRadius(10.px)
+                            .padding(leftRight = 3.cssRem, topBottom = 0.5.cssRem)
+                            .margin(top = 2.cssRem)
+                            .zIndex(1f)
+                            .then(KotlinGradient)
+                            .onClick {
+                                ctx.router.navigateTo(KotlinKolkataLinkedIn)
+                            }
+
+                    ) {
+                        SpanText(
+                            text = LETS_GO,
+                            modifier = Modifier.color(Colors.White)
+                        )
                     }
                 }
-            }
 
-            Div(HomeGridStyle
-                .toModifier()
-                .displayIfAtLeast(Breakpoint.MD)
-                .grid {
-                    rows { repeat(3) { size(1.fr) } }
-                    columns { repeat(5) {size(1.fr) } }
+                Box(
+                    modifier = Modifier.width(100.percent).height(auto),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        src = KOTLIN_3D,
+                        modifier = HeroImageStyle.toModifier()
+                    )
                 }
-                .toAttrs()
-            ) {
-                val sitePalette = ColorMode.current.toSitePalette()
-                GridCell(sitePalette.brand.primary, 1, 1, 2, 2)
-                GridCell(ColorSchemes.Monochrome._600, 1, 3)
-                GridCell(ColorSchemes.Monochrome._100, 1, 4, width = 2)
-                GridCell(sitePalette.brand.accent, 2, 3, width = 2)
-                GridCell(ColorSchemes.Monochrome._300, 2, 5)
-                GridCell(ColorSchemes.Monochrome._800, 3, 1, width = 5)
+
             }
         }
     }
