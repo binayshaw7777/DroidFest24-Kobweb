@@ -1,0 +1,14 @@
+site:
+  title: "DroidFest24-Kobweb"
+
+server:
+  files:
+    dev:
+      contentRoot: "build/processedResources/js/main/public"
+      script: "build/dist/js/developmentExecutable/droidfest24kobweb.js"
+      api: "build/libs/droidfest24kobweb.jar"
+    prod:
+      script: "build/dist/js/productionExecutable/droidfest24kobweb.js"
+      siteRoot: ".kobweb/site"
+
+  port: 8080
