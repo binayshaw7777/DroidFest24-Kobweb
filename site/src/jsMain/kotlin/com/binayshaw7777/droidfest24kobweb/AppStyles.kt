@@ -1,6 +1,7 @@
 package com.binayshaw7777.droidfest24kobweb
 
 import com.binayshaw7777.droidfest24kobweb.components.Utils
+import com.varabyte.kobweb.compose.css.Cursor
 import com.varabyte.kobweb.compose.css.FontWeight
 import com.varabyte.kobweb.compose.css.TextAlign
 import com.varabyte.kobweb.compose.ui.Modifier
@@ -87,6 +88,19 @@ val KotlinGradient = Modifier.styleModifier {
         "linear-gradient(91deg, #6B57FF 49.09%, #B223E9 76.7%, #E3475A 103.23%)"
     )
 }
+
+val FontClippingModifier = Modifier.styleModifier {
+    property("-webkit-background-clip", "text")
+    property("-webkit-text-fill-color", "transparent")
+}
+
+val GradientButton = Modifier
+    .cursor(Cursor.Pointer)
+    .borderRadius(10.px)
+    .padding(leftRight = 3.cssRem, topBottom = 0.5.cssRem)
+    .margin(top = 2.cssRem)
+    .zIndex(1f)
+    .then(KotlinGradient)
 
 val HeadlineTextStyle by ComponentStyle.base {
     Modifier

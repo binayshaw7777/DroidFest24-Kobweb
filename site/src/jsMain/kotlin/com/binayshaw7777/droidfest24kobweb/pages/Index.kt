@@ -1,6 +1,8 @@
 package com.binayshaw7777.droidfest24kobweb.pages
 
 import androidx.compose.runtime.Composable
+import com.binayshaw7777.droidfest24kobweb.FontClippingModifier
+import com.binayshaw7777.droidfest24kobweb.GradientButton
 import com.binayshaw7777.droidfest24kobweb.HeadingFontStyle
 import com.varabyte.kobweb.compose.foundation.layout.Box
 import com.varabyte.kobweb.compose.foundation.layout.Column
@@ -24,10 +26,8 @@ import com.binayshaw7777.droidfest24kobweb.components.Utils.KOTLIN_3D
 import com.binayshaw7777.droidfest24kobweb.components.Utils.KotlinKolkataLinkedIn
 import com.binayshaw7777.droidfest24kobweb.components.Utils.LETS_GO
 import com.binayshaw7777.droidfest24kobweb.components.layouts.PageLayout
-import com.varabyte.kobweb.compose.css.Cursor
 import com.varabyte.kobweb.compose.foundation.layout.Arrangement
 import com.varabyte.kobweb.compose.ui.Alignment
-import com.varabyte.kobweb.compose.ui.styleModifier
 import com.varabyte.kobweb.silk.components.graphics.Image
 import com.varabyte.kobweb.silk.components.layout.SimpleGrid
 import com.varabyte.kobweb.silk.components.layout.numColumns
@@ -37,7 +37,11 @@ import org.jetbrains.compose.web.css.keywords.auto
 @Page
 @Composable
 fun HomePage() {
+
     PageLayout("Home") {
+
+        val ctx = rememberPageContext()
+
         Box(HeroContainerStyle.toModifier()) {
 
             SimpleGrid(
@@ -45,9 +49,7 @@ fun HomePage() {
                 numColumns = numColumns(base = 1, sm = 1, md = 2)
             ) {
 
-                Column(
-                    verticalArrangement = Arrangement.Center
-                ) {
+                Column(verticalArrangement = Arrangement.Center) {
 
                     Row {
 
@@ -58,39 +60,17 @@ fun HomePage() {
 
                         SpanText(
                             text = FEST,
-                            modifier = HeadingFontStyle.toModifier()
-                                .then(KotlinGradient)
-                                .styleModifier {
-                                    property("-webkit-background-clip", "text")
-                                    property("-webkit-text-fill-color", "transparent")
-                                }
+                            modifier = HeadingFontStyle.toModifier().then(KotlinGradient).then(FontClippingModifier)
                         )
                     }
 
-                    SpanText(
-                        text = KOLKATA_24,
-                        modifier = SecondaryFontStyle.toModifier()
-                    )
+                    SpanText(text = KOLKATA_24, modifier = SecondaryFontStyle.toModifier())
 
-                    val ctx = rememberPageContext()
 
                     Box(
-                        modifier = Modifier
-                            .cursor(Cursor.Pointer)
-                            .borderRadius(10.px)
-                            .padding(leftRight = 3.cssRem, topBottom = 0.5.cssRem)
-                            .margin(top = 2.cssRem)
-                            .zIndex(1f)
-                            .then(KotlinGradient)
-                            .onClick {
-                                ctx.router.navigateTo(KotlinKolkataLinkedIn)
-                            }
-
+                        modifier = GradientButton.onClick { ctx.router.navigateTo(KotlinKolkataLinkedIn) }
                     ) {
-                        SpanText(
-                            text = LETS_GO,
-                            modifier = Modifier.color(Colors.White)
-                        )
+                        SpanText(text = LETS_GO, modifier = Modifier.color(Colors.White))
                     }
                 }
 
@@ -98,10 +78,7 @@ fun HomePage() {
                     modifier = Modifier.width(100.percent).height(auto),
                     contentAlignment = Alignment.Center
                 ) {
-                    Image(
-                        src = KOTLIN_3D,
-                        modifier = HeroImageStyle.toModifier()
-                    )
+                    Image(src = KOTLIN_3D, modifier = HeroImageStyle.toModifier())
                 }
 
             }
